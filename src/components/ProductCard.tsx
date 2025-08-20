@@ -17,20 +17,11 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart?: (product: Product) => void;
 }
 
-const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
-
-  const handleAddToCart = async () => {
-    setIsAdding(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    onAddToCart?.(product);
-    setIsAdding(false);
-  };
 
   return (
     <Card className="group relative overflow-hidden bg-card shadow-warm hover:shadow-elegant transition-all duration-500 hover:scale-105 border-0">
@@ -92,21 +83,6 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             </span>
             <span className="text-sm text-muted-foreground mr-1">ل.س</span>
           </div>
-
-          <Button
-            onClick={handleAddToCart}
-            disabled={isAdding}
-            className="bg-gradient-primary hover:opacity-90 text-primary-foreground shadow-warm hover:shadow-elegant transition-all duration-300 px-6"
-          >
-            {isAdding ? (
-              <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-            ) : (
-              <>
-                <ShoppingCart className="w-4 h-4 ml-2" />
-                أضف للسلة
-              </>
-            )}
-          </Button>
         </div>
       </CardContent>
     </Card>

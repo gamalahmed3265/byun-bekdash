@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "@/components/Navigation";
 import ProductCard from "@/components/ProductCard";
 import TestimonialCard from "@/components/TestimonialCard";
@@ -110,6 +112,7 @@ const Index = () => {
         <div className="absolute inset-0 z-0">
           <Image
             src={heroImage}
+            priority
             alt="Ice Karem - أفضل بوظة سورية"
             className="w-full h-full object-cover"
             fill
@@ -218,11 +221,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {featuredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={handleAddToCart}
-              />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
