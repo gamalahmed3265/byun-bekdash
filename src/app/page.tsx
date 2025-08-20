@@ -1,103 +1,311 @@
+import Navigation from "@/components/Navigation";
+import ProductCard from "@/components/ProductCard";
+import TestimonialCard from "@/components/TestimonialCard";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Star,
+  Heart,
+  Users,
+  Award,
+  ArrowLeft,
+  ShoppingCart,
+} from "lucide-react";
+import { toast } from "sonner";
+
+import heroImage from "@/assets/hero-ice-cream.jpg";
+import pistachioImage from "@/assets/pistachio-ice-cream.jpg";
+import roseImage from "@/assets/rose-ice-cream.jpg";
+import vanillaImage from "@/assets/vanilla-ice-cream.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+const Index = () => {
+  const featuredProducts = [
+    {
+      id: "1",
+      name: "Pistachio Ice Cream",
+      nameArabic: "بوظة الفستق الحلبي",
+      price: 2500,
+      image: pistachioImage,
+      flavor: "فستق حلبي",
+      popular: true,
+    },
+    {
+      id: "2",
+      name: "Rose Ice Cream",
+      nameArabic: "بوظة الورد",
+      price: 2200,
+      image: roseImage,
+      flavor: "ورد",
+      popular: true,
+    },
+    {
+      id: "3",
+      name: "Vanilla Ice Cream",
+      nameArabic: "بوظة الفانيليا",
+      price: 2000,
+      image: vanillaImage,
+      flavor: "فانيليا",
+    },
+  ];
+
+  const featuredTestimonials = [
+    {
+      id: "1",
+      name: "أحمد السوري",
+      avatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+      rating: 5,
+      comment: "Amazing authentic Syrian ice cream!",
+      commentArabic: "بوظة سورية أصيلة رائعة! طعم الفستق الحلبي لا يُقاوم.",
+      date: "منذ أسبوع",
+      location: "دمشق، سوريا",
+    },
+    {
+      id: "2",
+      name: "فاطمة خالد",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+      rating: 5,
+      comment: "The rose ice cream is divine!",
+      commentArabic: "بوظة الورد لذيذة جداً وطعمها مميز، أنصح الجميع بتجربتها!",
+      date: "منذ 3 أيام",
+      location: "حلب، سوريا",
+    },
+  ];
+
+  const features = [
+    {
+      icon: Heart,
+      title: "وصفة أصيلة",
+      description: "نستخدم الوصفات التقليدية السورية المتوارثة عبر الأجيال",
+    },
+    {
+      icon: Award,
+      title: "جودة عالية",
+      description: "مكونات طبيعية 100% ومنتقاة بعناية من أفضل المصادر",
+    },
+    {
+      icon: Users,
+      title: "خدمة مميزة",
+      description: "فريق متخصص وخدمة عملاء على مدار الساعة لضمان رضاكم",
+    },
+  ];
+
+  const handleAddToCart = (product: any) => {
+    toast.success(`تم إضافة ${product.nameArabic} إلى السلة`, {
+      description: `السعر: ${product.price} ل.س`,
+    });
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-background">
+      <Navigation />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={heroImage}
+            alt="Ice Karem - أفضل بوظة سورية"
+            className="w-full h-full object-cover"
+            fill
+          />
+          <div className="absolute inset-0 bg-gradient-hero"></div>
         </div>
+
+        {/* Content */}
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+          <Badge className="bg-accent/20 text-accent border-accent/30 mb-6 animate-float">
+            ✨ بوظة سورية أصيلة منذ 1950
+          </Badge>
+
+          <h1 className="font-gabriela text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            Ice Karem
+            <br />
+            <span className="text-accent animate-shimmer">بوظة الذكريات</span>
+          </h1>
+
+          <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-2xl mx-auto">
+            استمتع بأفضل وألذ أنواع البوظة السورية الأصيلة مع نكهات متنوعة وطعم
+            لا يُنسى
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-glow transition-bounce text-lg px-8 py-4"
+              asChild
+            >
+              <Link href="/products">
+                <ShoppingCart className="w-5 h-5 ml-2" />
+                اطلب الآن
+              </Link>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm transition-elegant text-lg px-8 py-4"
+              asChild
+            >
+              <Link href="/testimonials">
+                آراء العملاء
+                <ArrowLeft className="w-5 h-5 mr-2" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </section>
+
+      <main className="container mx-auto px-4">
+        {/* Features Section */}
+        <section className="py-20">
+          <div className="text-center mb-16">
+            <h2 className="font-gabriela text-3xl md:text-4xl font-bold text-primary mb-4">
+              لماذا نحن مختلفون؟
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              نحن نفخر بتقديم بوظة سورية أصيلة بأعلى معايير الجودة والطعم الفريد
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={index}
+                  className="text-center shadow-warm hover:shadow-elegant transition-all duration-500 border-0 group"
+                >
+                  <CardContent className="p-8">
+                    <div className="bg-gradient-warm rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                      <Icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="font-gabriela text-xl font-bold text-primary mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Featured Products */}
+        <section className="py-20 bg-muted/20 -mx-4 px-4 rounded-3xl">
+          <div className="text-center mb-16">
+            <h2 className="font-gabriela text-3xl md:text-4xl font-bold text-primary mb-4">
+              نكهاتنا المميزة
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              اكتشف تشكيلة من أفضل النكهات السورية الأصيلة المحضرة بعناية فائقة
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-elegant"
+              asChild
+            >
+              <Link href="/products">
+                عرض جميع المنتجات
+                <ArrowLeft className="w-5 h-5 mr-2" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Testimonials Preview */}
+        <section className="py-20">
+          <div className="text-center mb-16">
+            <h2 className="font-gabriela text-3xl md:text-4xl font-bold text-primary mb-4">
+              ماذا يقول عملاؤنا؟
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              آراء حقيقية من عملائنا السعداء الذين جربوا بوظة Ice Karem الأصيلة
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {featuredTestimonials.map((testimonial) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-elegant"
+              asChild
+            >
+              <Link href="/testimonials">
+                قراءة المزيد من الآراء
+                <ArrowLeft className="w-5 h-5 mr-2" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20">
+          <div className="bg-gradient-primary rounded-3xl p-12 text-center shadow-elegant">
+            <h2 className="font-gabriela text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
+              جاهز لتذوق الطعم الأصيل؟
+            </h2>
+            <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+              اطلب بوظتك المفضلة الآن واستمتع بتوصيل سريع ونكهات لا تُنسى
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-glow transition-bounce text-lg px-8"
+                asChild
+              >
+                <Link href="/products">
+                  <ShoppingCart className="w-5 h-5 ml-2" />
+                  اطلب الآن
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 transition-elegant text-lg px-8"
+              >
+                تواصل معنا
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
-}
+};
+
+export default Index;
