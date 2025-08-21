@@ -4,14 +4,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface Product {
   id: string;
   name: string;
   nameArabic: string;
   price: number;
-  image: string;
+  image: string | StaticImageData; // 👈 الحل هنا
   flavor: string;
   popular?: boolean;
 }
