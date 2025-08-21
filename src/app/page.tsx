@@ -113,11 +113,11 @@ const Index = () => {
           <Image
             src={heroImage}
             priority
-            alt="Ice Karem - أفضل بوظة سورية"
+            alt="Ice cream - أفضل بوظة سورية"
             className="w-full h-full object-cover"
             fill
           />
-          <div className="absolute inset-0 bg-gradient-hero"></div>
+          <div className="absolute inset-0 bg-right bg-gradient-hero"></div>
         </div>
 
         {/* Content */}
@@ -127,7 +127,7 @@ const Index = () => {
           </Badge>
 
           <h1 className="font-gabriela text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Ice Karem
+            Ice cream
             <br />
             <span className="text-accent animate-shimmer">بوظة الذكريات</span>
           </h1>
@@ -247,7 +247,7 @@ const Index = () => {
               ماذا يقول عملاؤنا؟
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              آراء حقيقية من عملائنا السعداء الذين جربوا بوظة Ice Karem الأصيلة
+              آراء حقيقية من عملائنا السعداء الذين جربوا بوظة Ice cream الأصيلة
             </p>
           </div>
 

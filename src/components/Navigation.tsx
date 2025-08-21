@@ -1,40 +1,54 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Star, Package } from "lucide-react";
+import { ShoppingCart, Star, Package, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
+import Logo from "@/assets/logo.jpg"; // Adjust the path as necessary
 const Navigation = () => {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
-    { path: "/", label: "الرئيسية", icon: null },
+    { path: "/", label: "الرئيسية", icon: Home },
     { path: "/products", label: "المنتجات", icon: Package },
     { path: "/testimonials", label: "آراء العملاء", icon: Star },
   ];
 
   return (
-    <nav className="bg-card/95 backdrop-blur-sm border-b border-border shadow-elegant sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+    <nav
+      className={`fixed left-0 w-full top-0 z-50 transition-all duration-300 
+        ${
+          isScrolled
+            ? "bg-primary border-border shadow-elegant"
+            : "bg-primary border-border shadow-elegant"
+          // isScrolled
+          //   ? "bg-primary border-border shadow-elegant"
+          //   : "text-card/95 backdrop-blur-sm bg-transparent"
+        }`}
+    >
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center space-x-2 rtl:space-x-reverse"
           >
-            <div className="bg-gradient-primary p-2 rounded-xl shadow-warm">
-              <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                <span className="text-accent-foreground font-gabriela font-bold text-lg">
-                  🍦
-                </span>
-              </div>
-            </div>
-            <div className="text-right rtl:text-left">
-              <h1 className="font-gabriela text-2xl font-bold text-primary">
-                Ice Karem
-              </h1>
-              <p className="text-sm text-muted-foreground">بوظة سورية أصيلة</p>
-            </div>
+            <Image src={Logo} alt="Ice Karem Logo" width={100} height={100} />
           </Link>
 
           {/* Navigation Links */}
@@ -49,8 +63,12 @@ const Navigation = () => {
                   href={item.path}
                   className={`flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 rounded-lg transition-elegant ${
                     isActive
-                      ? "bg-primary text-primary-foreground shadow-warm"
-                      : "text-foreground hover:bg-muted hover:text-primary"
+                      ? isScrolled
+                        ? "bg-primary-foreground text-primary shadow-warm"
+                        : "text-primary bg-primary-foreground shadow-warm"
+                      : isScrolled
+                      ? "text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/20"
+                      : "text-card/95 hover:text-muted"
                   }`}
                 >
                   {Icon && <Icon className="w-4 h-4" />}
@@ -61,17 +79,27 @@ const Navigation = () => {
           </div>
 
           {/* Cart Button */}
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
-            className="bg-peach/50 border-peach hover:bg-peach hover:text-peach-foreground transition-elegant shadow-warm"
+            className={`transition-elegant shadow-warm ${
+              isScrolled
+                ? "bg-primary-foreground text-primary border-primary-foreground hover:bg-primary-foreground/90"
+                : "bg-peach/50 border-peach hover:bg-peach hover:text-peach-foreground"
+            }`}
           >
             <ShoppingCart className="w-4 h-4 ml-2" />
             السلة
-            <span className="bg-primary text-primary-foreground rounded-full px-2 py-1 text-xs mr-2">
+            <span
+              className={`rounded-full px-2 py-1 text-xs mr-2 ${
+                isScrolled
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-primary text-primary-foreground"
+              }`}
+            >
               3
             </span>
-          </Button>
+          </Button> */}
         </div>
 
         {/* Mobile Navigation */}
@@ -86,7 +114,11 @@ const Navigation = () => {
                 href={item.path}
                 className={`flex items-center space-x-1 rtl:space-x-reverse px-3 py-2 rounded-lg text-sm transition-elegant ${
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-warm"
+                    ? isScrolled
+                      ? "bg-primary-foreground text-primary shadow-warm"
+                      : "bg-primary text-primary-foreground shadow-warm"
+                    : isScrolled
+                    ? "text-primary-foreground hover:bg-primary-foreground/20"
                     : "text-foreground hover:bg-muted hover:text-primary"
                 }`}
               >
