@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -48,7 +49,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Product Image */}
       <div className="relative h-48 overflow-hidden bg-gradient-warm">
-        <img
+        <Image
+          fill
           src={product.image}
           alt={product.nameArabic}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
